@@ -1,0 +1,26 @@
+25
+PND Pelno_mokestis 23.2
+PVM Pridetines_vertes_mokestis_v2 21.0
+PVM Pridetines_vertes_mokestis 20.3
+PND Pelno_mokestis_v2 20
+IND Individualios_veiklos_mokestis_v2 17.2
+IND Individualios_veiklos_mokestis 16.0
+VSD Valstybinio_socialinio_draudimo 15.9
+VSD Valstybinio_socialinio_draudimo 15.3
+VSD Valstybinio_socialinio_draudimo 14.7
+PSD Privalomasis_sveikatos_draudimas 13.3
+PSD Privalomasis_sveikatos_draudimas_v2 12.1
+PND Pelno_mokestis 12
+MUT Muito_mokestis 11.0
+PSD Privalomasis_sveikatos_draudimas 10.8
+MUT Muito_mokestis 10.5
+TAX Special_tax_mokestis_v2 9.1
+MUT Muito_mokestis 9
+TAX Special_tax_mokestis 8.2
+APM Aplinkos_tarsos_mokestis 7.5
+GPM Gyventoju_pajamu_mokestis 7.0
+GPM Gyventoju_pajamu_mokestis 6.5
+AKC Akcizo_mokestis 5.5
+AKC Akcizo_mokestis 5.1
+NTM Nekilnojamojo_turto_mokestis 1.5
+NTM Nekilnojamojo_turto_mokestis 1.2
