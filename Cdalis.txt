@@ -1,0 +1,115 @@
+main.c
+
+#include <stdio.h>
+#include "mokestis.h"
+#include "analize.h"
+
+#define MAX 100
+
+int main() {
+    Mokestis mokesciai[MAX];
+    int kiekis = nuskaitytiMokescius("Duomenys.txt", mokesciai, MAX);
+    if (kiekis < 0) return 1;
+    if (arSurikiuotaMazejanciai(mokesciai, kiekis)) {
+        printf("Failas jau surikiuotas\n");
+    } else {
+        printf("Failas nesurikiuotas, rikiuojama...\n");
+        rikiuotiMazejanciai(mokesciai, kiekis);
+    }
+    spausdinti(mokesciai, kiekis);
+    printf("Skirtingu mokesciu rusiu: %d\n", skirtinguRusiuSkaicius(mokesciai, kiekis));
+    return 0;
+}
+
+analize.h
+
+#ifndef ANALIZE_H
+#define ANALIZE_H
+
+#include "mokestis.h"
+
+int arSurikiuotaMazejanciai(const Mokestis m[], int n);
+void rikiuotiMazejanciai(Mokestis m[], int n);
+int skirtinguRusiuSkaicius(const Mokestis m[], int n);
+void spausdinti(const Mokestis m[], int n);
+
+#endif
+
+analize.c
+
+#include "analize.h"
+#include <stdio.h>
+#include <string.h>
+
+int arSurikiuotaMazejanciai(const Mokestis m[], int n) {
+    for (int i = 0; i < n - 1; i++)
+        if (m[i].proc < m[i + 1].proc)
+            return 0;
+    return 1;
+}
+
+void rikiuotiMazejanciai(Mokestis m[], int n) {
+    for (int i = 0; i < n - 1; i++)
+        for (int j = 0; j < n - i - 1; j++)
+            if (m[j].proc < m[j + 1].proc) {
+                Mokestis temp = m[j];
+                m[j] = m[j + 1];
+                m[j + 1] = temp;
+            }
+}
+
+int skirtinguRusiuSkaicius(const Mokestis m[], int n) {
+    int kiek = 0;
+    for (int i = 0; i < n; i++) {
+        int nauja = 1;
+        for (int j = 0; j < i; j++) {
+            if (strcmp(m[i].kodas, m[j].kodas) == 0) {
+                nauja = 0;
+                break;
+            }
+        }
+        if (nauja) kiek++;
+    }
+    return kiek;
+}
+
+void spausdinti(const Mokestis m[], int n) {
+    for (int i = 0; i < n; i++)
+        printf("%s %s %.1f\n", m[i].kodas, m[i].pav, m[i].proc);
+}
+
+mokestis.h
+
+#ifndef MOKESTIS_H
+#define MOKESTIS_H
+
+struct Mokestis {
+    char kodas[4];
+    char pav[100];
+    double proc;
+};
+
+int nuskaitytiMokescius(const char* failoVardas, Mokestis mokesciai[], int max);
+
+#endif
+
+mokestis.c
+
+#include "mokestis.h"
+#include <stdio.h>
+
+int nuskaitytiMokescius(const char* failoVardas, Mokestis mokesciai[], int max) {
+    FILE* failas = fopen(failoVardas, "r");
+    if (!failas) {
+        printf("Failo nepavyko rasti ir atidaryti\n");
+        return -1;
+    }
+    int eil;
+    fscanf(failas, "%d", &eil);
+    if (eil > max) eil = max;
+    for (int i = 0; i < eil; i++) {
+        fscanf(failas, "%3s %99s %lf", mokesciai[i].kodas, mokesciai[i].pav, &mokesciai[i].proc);
+    }
+    fclose(failas);
+    return eil;
+}
